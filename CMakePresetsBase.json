@@ -1,0 +1,150 @@
+{
+	"version": 6,
+	"cmakeMinimumRequired": {
+		"major": 3,
+		"minor": 28
+	},
+	"configurePresets": [
+		{
+			"name": "base-default",
+			"hidden": true,
+			"generator": "Ninja",
+			"binaryDir": "${sourceDir}/build/",
+			"installDir": "${sourceDir}/install/",
+			"cacheVariables": {
+				"CMAKE_EXPORT_COMPILE_COMMANDS": {
+					"type": "BOOL",
+					"value": "ON"
+				},
+				"CPACK_PACKAGE_DIRECTORY": {
+					"type": "PATH",
+					"value": "${sourceDir}/packages"
+				},
+				"CMAKE_TOOLCHAIN_FILE": {
+					"type": "PATH",
+					"value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+				},
+				"VCPKG_OVERLAY_TRIPLETS": {
+					"type": "PATH",
+					"value": "${sourceDir}/vcpkg_triplets"
+				}
+			}
+		},
+		{
+			"name": "build-type-release",
+			"hidden": true,
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": {
+					"type": "STRING",
+					"value": "Release"
+				}
+			}
+		},
+		{
+			"name": "build-type-debug",
+			"hidden": true,
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": {
+					"type": "STRING",
+					"value": "Debug"
+				}
+			}
+		},
+		{
+			"name": "nix-compiler-options",
+			"hidden": true,
+			"cacheVariables": {
+				"CMAKE_CXX_FLAGS": {
+					"type": "STRING",
+					"value": "-Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Wshadow -Wold-style-cast -Wunused -Werror"
+				}
+			}
+		},
+		{
+			"name": "base-win",
+			"hidden": true,
+			"description": "Base Windows",
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Windows"
+			},
+			"cacheVariables": {
+				"VCPKG_TARGET_TRIPLET": {
+					"type": "STRING",
+					"value": "x64-windows-static"
+				},
+				"CMAKE_MSVC_RUNTIME_LIBRARY": {
+					"type": "STRING",
+					"value": "MultiThreaded$<$<CONFIG:Debug>:Debug>"
+				}
+			}
+		},
+		{
+			"name": "base-linux",
+			"hidden": true,
+			"description": "Base Linux",
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Linux"
+			},
+			"inherits": [
+				"nix-compiler-options"
+			]
+		},
+		{
+			"name": "base-osx",
+			"hidden": true,
+			"description": "Base OSX",
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Darwin"
+			},
+			"inherits": [
+				"nix-compiler-options"
+			],
+			"cacheVariables": {
+				"VCPKG_TARGET_TRIPLET": {
+					"type": "STRING",
+					"value": "x64-osx"
+				}
+			}
+		},
+		{
+			"name": "base-dev",
+			"hidden": true,
+			"description": "Base for dev/CI setup",
+			"cacheVariables": {
+				"CMAKE_MESSAGE_LOG_LEVEL": {
+					"type": "STRING",
+					"value": "VERBOSE"
+				},
+				"CMAKE_BUILD_TYPE": {
+					"type": "STRING",
+					"value": "Debug"
+				}
+			}
+		}
+	],
+	"buildPresets": [
+		{
+			"name": "base-default",
+			"hidden": true,
+			"jobs": 10
+		}
+	],
+	"testPresets": [
+		{
+			"name": "base-default",
+			"hidden": true,
+			"execution": {
+				"jobs": 10
+			},
+			"output": {
+				"outputOnFailure": true
+			}
+		}
+	]
+}

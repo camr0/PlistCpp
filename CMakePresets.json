@@ -1,0 +1,119 @@
+{
+	"version": 6,
+	"cmakeMinimumRequired": {
+		"major": 3,
+		"minor": 28
+	},
+	"include": [
+		"./CMakePresetsBase.json"
+	],
+	"configurePresets": [
+		{
+			"name": "project-base",
+			"hidden": true,
+			"cacheVariables": {}
+		},
+		{
+			"name": "linux-static",
+			"inherits": [
+				"base-default",
+				"base-linux",
+				"project-base",
+				"build-type-release"
+			],
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Linux"
+			},
+			"cacheVariables": {
+				"VCPKG_TARGET_TRIPLET": {
+					"type": "STRING",
+					"value": "x64-linux-static"
+				}
+			}
+		},
+		{
+			"name": "linux-static-dev",
+			"inherits": [
+				"base-default",
+				"base-linux",
+				"base-dev",
+				"build-type-debug"
+			],
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Linux"
+			},
+			"cacheVariables": {
+				"VCPKG_TARGET_TRIPLET": {
+					"type": "STRING",
+					"value": "x64-linux-static"
+				}
+			}
+		},
+		{
+			"name": "osx-static",
+			"inherits": [
+				"base-default",
+				"base-osx",
+				"project-base",
+				"build-type-release"
+			],
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Darwin"
+			},
+			"cacheVariables": {
+				"VCPKG_TARGET_TRIPLET": {
+					"type": "STRING",
+					"value": "x64-osx"
+				}
+			}
+		},
+		{
+			"name": "osx-static-dev",
+			"inherits": [
+				"base-default",
+				"base-osx",
+				"base-dev",
+				"build-type-debug"
+			],
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Darwin"
+			}
+		},
+		{
+			"name": "win-static",
+			"inherits": [
+				"base-default",
+				"base-win",
+				"project-base",
+				"build-type-release"
+			],
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Windows"
+			}
+		},
+		{
+			"name": "win-static-dev",
+			"inherits": [
+				"base-default",
+				"base-win",
+				"base-dev",
+				"build-type-debug"
+			],
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Windows"
+			}
+		}
+	]
+}
