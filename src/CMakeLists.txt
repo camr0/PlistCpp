@@ -50,7 +50,7 @@ install(EXPORT ${PROJECT_NAME}_targets
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
 "include(CMakeFindDependencyMacro)\n"
 "find_dependency(Boost REQUIRED COMPONENTS filesystem)\n"
-"find_dependency(pugixml::pugixml REQUIRED)\n"
+"find_dependency(pugixml REQUIRED)\n"
 "include(\"\${CMAKE_CURRENT_LIST_DIR}/${PROJECT_NAME}-targets.cmake\")\n"
 )
 
