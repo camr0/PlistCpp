@@ -6,14 +6,12 @@
 //
 //
 
-#include <ios>
 #if !defined(__BASE64_HPP_INCLUDED__)
 #define __BASE64_HPP_INCLUDED__ 1
 
 #pragma once
 
-#include <iterator>
-
+#include <ios>
 static int _base64Chars[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                              'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
                              'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
@@ -37,7 +35,7 @@ static int _base64Chars[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', '
 #define _IOS_GOODBIT std::ios_base::goodbit
 
 // TEMPLATE CLASS base64_put
-template <class _E = char, class _Tr = std::char_traits<_E>>
+template <class _E = char, class _Tr = std::char_traits<_E> >
 class base64
 {
   public:
@@ -283,19 +281,18 @@ class base64
 				return _First;
 			}
 			else
-			{
 				_3to4.b64_0(_Char);
-			}
 
 			// -- 1 --
 			// Search next valid char...
 			while(++_First != _Last)
+				if((_Char = _getCharType(*_First)) != _UNKNOWN_CHAR)
+					break;
+
+			if(_First == _Last)
 			{
-				if(_First == _Last)
-				{
-					_St |= _IOS_FAILBIT | _IOS_EOFBIT; // unexpected EOF
-					return _First;
-				}
+				_St |= _IOS_FAILBIT | _IOS_EOFBIT; // unexpected EOF
+				return _First;
 			}
 
 			if(_Char == _EQUAL_CHAR)
@@ -305,17 +302,13 @@ class base64
 				return _First;
 			}
 			else
-			{
 				_3to4.b64_1(_Char);
-			}
 
 			// -- 2 --
 			// Search next valid char...
 			while(++_First != _Last)
-			{
 				if((_Char = _getCharType(*_First)) != _UNKNOWN_CHAR)
 					break;
-			}
 
 			if(_First == _Last)
 			{
@@ -346,21 +339,17 @@ class base64
 					++_First; // Skip '='
 
 				// write 1 byte to output
-				*_To = static_cast<byte_t>(_3to4.get_0());
+				*_To = (byte_t)_3to4.get_0();
 				return _First;
 			}
 			else
-			{
 				_3to4.b64_2(_Char);
-			}
 
 			// -- 3 --
 			// Search next valid char...
 			while(++_First != _Last)
-			{
 				if((_Char = _getCharType(*_First)) != _UNKNOWN_CHAR)
 					break;
-			}
 
 			if(_First == _Last)
 			{
@@ -377,21 +366,20 @@ class base64
 				_3to4.b64_3(0);
 
 				// write to output 2 bytes
-				*_To = static_cast<byte_t>(_3to4.get_0());
-				*_To = static_cast<byte_t>(_3to4.get_1());
+				*_To = (byte_t)_3to4.get_0();
+				*_To = (byte_t)_3to4.get_1();
 
 				++_First; // set position to next character
 
 				return _First;
 			}
 			else
-			{
 				_3to4.b64_3(_Char);
-			}
+
 			// write to output 3 bytes
-			*_To = static_cast<byte_t>(_3to4.get_0());
-			*_To = static_cast<byte_t>(_3to4.get_1());
-			*_To = static_cast<byte_t>(_3to4.get_2());
+			*_To = (byte_t)_3to4.get_0();
+			*_To = (byte_t)_3to4.get_1();
+			*_To = (byte_t)_3to4.get_2();
 
 			++_First;
 
