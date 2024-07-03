@@ -14,6 +14,7 @@ else ()
 endif ()
 
 set(SOURCES Plist.cpp PlistDate.cpp)
+set(HEADERS Plist.hpp PlistDate.hpp)
 add_library(${PROJECT_NAME} ${SOURCES})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -32,13 +33,13 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 )
 
 # Install the library and its headers
+target_sources(${PROJECT_NAME} PUBLIC FILE_SET headers TYPE HEADERS FILES ${HEADERS})
 install(TARGETS ${PROJECT_NAME}
 		EXPORT ${PROJECT_NAME}_targets
 		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
-
-install(DIRECTORY src/ DESTINATION include/plistcpp FILES_MATCHING PATTERN "*.h")
+		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+		FILE_SET headers DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/plistcpp)
 
 # Generate and install *-targets.cmake
 install(EXPORT ${PROJECT_NAME}_targets
