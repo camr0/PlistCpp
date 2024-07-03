@@ -1,8 +1,8 @@
 #include "Plist.hpp"
+#include <algorithm>
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
-#include <catch2/matchers/catch_matchers_vector.hpp>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -72,6 +72,13 @@ static void createMessage(map<string, std::any>& dict)
 	dict["testDictLarge"] = innerDict;
 }
 
+bool vectorsEqual(const std::vector<char>& a, const std::vector<char>& b)
+{
+	const auto& res = std::mismatch(a.begin(), a.end(), b.begin(), b.end());
+
+	return res.first == a.end() && res.second == b.end();
+}
+
 static void checkDictionary(const map<string, std::any>& dict)
 {
 	string actualString = "hello there";
@@ -105,7 +112,7 @@ static void checkDictionary(const map<string, std::any>& dict)
 	// length
 	REQUIRE(actualData.size() == plistData.size());
 
-	REQUIRE_THAT(actualData, Catch::Matchers::Equals(plistData));
+	REQUIRE(vectorsEqual(actualData, plistData));
 
 	REQUIRE_THAT(actualDouble,
 	             Catch::Matchers::WithinRel(std::any_cast<const double&>(dict.find("testDouble")->second), 1E-5));
