@@ -80,9 +80,11 @@ static void checkDictionary(const map<string, std::any>& dict)
 	int actualInt = -3455;
 
 	// checking byte array
-	std::ifstream stream("./testImage.png", std::ios::binary);
-	if(!stream)
+	std::ifstream stream("./testImage.png", std::ios_base::in | std::ios::binary);
+	if(!stream.is_open())
+	{
 		throw std::runtime_error("Can't open file: testImage.png");
+	}
 
 	int start = stream.tellg();
 	stream.seekg(0, std::ifstream::end);

@@ -20,6 +20,6 @@ target_link_libraries(${PROJECT_NAME} PlistCpp Catch2::Catch2WithMain)
 
 add_custom_command(
 				TARGET test POST_BUILD
-				COMMAND ${CMAKE_COMMAND} -E copy
-				${CMAKE_SOURCE_DIR}/test/testImage.png
-				${CMAKE_CURRENT_BINARY_DIR}/testImage.png)
+				COMMAND ${CMAKE_COMMAND} -E copy_directory
+				${CMAKE_SOURCE_DIR}/test/test-data/
+				${CMAKE_CURRENT_BINARY_DIR})
