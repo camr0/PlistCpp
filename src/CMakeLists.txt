@@ -22,7 +22,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 								CXX_EXTENSIONS OFF)
 
 find_package(Boost REQUIRED COMPONENTS locale)
-find_package(catch2 REQUIRED)
+find_package(Catch2 REQUIRED)
 find_package(pugixml REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} Boost::locale Catch2::Catch2WithMain pugixml::pugixml)
