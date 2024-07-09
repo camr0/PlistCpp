@@ -14,7 +14,7 @@ endif()
 set(SOURCES PlistTests.cpp)
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-find_package(catch2 REQUIRED)
+find_package(Catch2 REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} PlistCpp Catch2::Catch2WithMain)
 
