@@ -16,10 +16,10 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 
 find_package(Catch2 REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} PlistCpp Catch2::Catch2WithMain)
+target_link_libraries(${PROJECT_NAME} plistcpp Catch2::Catch2WithMain)
 
 add_custom_command(
-				TARGET test POST_BUILD
+				TARGET ${PROJECT_NAME} POST_BUILD
 				COMMAND ${CMAKE_COMMAND} -E copy_directory
 				${CMAKE_SOURCE_DIR}/test/test-data/
 				${CMAKE_CURRENT_BINARY_DIR})

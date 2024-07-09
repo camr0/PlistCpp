@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.28)
 
-project(PlistCpp CXX)
+project(plistcpp CXX)
 
 include(GNUInstallDirs)
 
@@ -22,10 +22,9 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 								CXX_EXTENSIONS OFF)
 
 find_package(Boost REQUIRED COMPONENTS locale)
-find_package(Catch2 REQUIRED)
 find_package(pugixml REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} Boost::locale Catch2::Catch2WithMain pugixml::pugixml)
+target_link_libraries(${PROJECT_NAME} Boost::locale pugixml::pugixml)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
 				$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
@@ -39,7 +38,7 @@ install(TARGETS ${PROJECT_NAME}
 		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-		FILE_SET headers DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/plistcpp)
+		FILE_SET headers DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
 
 # Generate and install *-targets.cmake
 install(EXPORT ${PROJECT_NAME}_targets
@@ -57,4 +56,4 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
 
 # Install the generated config file
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
-								DESTINATION share/plistcpp)
+								DESTINATION share/${PROJECT_NAME})
