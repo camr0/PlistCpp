@@ -57,4 +57,4 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
 
 # Install the generated config file
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
-								DESTINATION share/plist)
+								DESTINATION share/plistcpp)
