@@ -5,7 +5,7 @@ project(test CXX)
 if(WIN32)
 	# Build at warning level 4 on Windows.
 	# Treat all warnings as errors
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /WX")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /WX /wd4267 /wd4244")
 else()
 	# Build with all warnings
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -Wno-invalid-utf8 -Wno-unused-parameter -Wno-old-style-cast")

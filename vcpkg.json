@@ -4,8 +4,6 @@
 		"boost-locale",
 		"pugixml",
 		"catch2"
-	]
+	],
+	"builtin-baseline": "230d85084ca006926d51c3d332c94298fb3bd56c"
 }
-
-
-
