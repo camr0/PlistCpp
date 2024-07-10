@@ -1,3 +1,5 @@
 build
 .vscode
 testing/*Written.plist
+.cache
+compile_commands.json
